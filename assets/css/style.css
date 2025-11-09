@@ -1,0 +1,127 @@
+:root{
+  --bg-1: #fff0f6;
+  --bg-2: #ffe6f2;
+  --pink-1: #ff8fb1;
+  --pink-2: #ff6fa3;
+  --card-bg: rgba(255,255,255,0.85);
+  --accent: #ff4d94;
+  --text: #4a2230;
+  --soft: 12px;
+  --max-width: 900px;
+  --heart-shadow: 0 6px 18px rgba(255,105,180,0.18);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+
+/* Soft centered card */
+.card{
+  width:100%;
+  max-width:var(--max-width);
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:40px;
+  text-align:center;
+  box-shadow: 0 10px 40px rgba(200,100,150,0.12);
+  position:relative;
+  z-index:5;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,120,160,0.12);
+}
+.card h1{
+  margin:0 0 12px 0;
+  font-family: "Dancing Script", "Segoe Script", cursive;
+  font-size:48px;
+  color:var(--accent);
+  letter-spacing:1px;
+  text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+  transform-origin:center;
+  animation:floatTitle 4s ease-in-out infinite;
+}
+@keyframes floatTitle{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
+}
+.card p{
+  margin:0;
+  font-size:18px;
+  color:#7a3a4d;
+  line-height:1.6;
+}
+
+/* hearts container sits behind the card but above background */
+.hearts-container{
+  pointer-events:none;
+  position:fixed;
+  inset:0;
+  z-index:2;
+  overflow:hidden;
+}
+
+/* Heart element */
+.heart{
+  position:absolute;
+  top:0;
+  width:36px;
+  height:36px;
+  transform:translateY(-10px) rotate(0deg);
+  will-change:transform, opacity;
+  filter: drop-shadow(var(--heart-shadow));
+  animation-name: drift, fade;
+  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  animation-iteration-count:1;
+}
+
+/* make hearts using pseudo-element for easier scaling */
+.heart::before,
+.heart::after{
+  content:"";
+  position:absolute;
+  width:inherit;
+  height:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12), rgba(255,255,255,0));
+  border-radius:50%;
+  left:50%;
+  top:0;
+  transform:translate(-50%,0);
+}
+.heart svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* animation for drifting up with slight horizontal sway */
+@keyframes drift{
+  0%{transform: translateY(0) scale(0.8) rotate(0deg)}
+  20%{transform: translateY(-20vh) scale(1) rotate(-10deg)}
+  50%{transform: translateY(-45vh) translateX(6vw) scale(1.05) rotate(6deg)}
+  80%{transform: translateY(-80vh) translateX(-6vw) scale(0.95) rotate(-6deg)}
+  100%{transform: translateY(-110vh) translateX(0vw) scale(0.9) rotate(0deg)}
+}
+@keyframes fade{
+  0%{opacity:1}
+  70%{opacity:0.95}
+  100%{opacity:0}
+}
+
+/* small responsive tweaks */
+@media (max-width:600px){
+  .card{padding:26px;border-radius:16px}
+  .card h1{font-size:32px}
+}
