@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱你朱萍</title>
+  <style>
+    /* 网页背景（可替换成你想要的样式） */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #000; /* 黑色背景更显爱心 */
+      overflow: hidden; /* 隐藏超出屏幕的爱心，避免滚动条 */
+    }
+
+    /* 爱心样式：用伪元素绘制爱心，无需图片 */
+    .heart {
+      position: absolute;
+      color: #ff4c9f; /* 爱心颜色（粉色） */
+      font-size: 20px;
+      opacity: 0.8; /* 透明度 */
+      animation: fall linear forwards; /* 下落动画 */
+      pointer-events: none; /* 避免爱心遮挡网页其他元素 */
+    }
+
+    /* 下落动画：从顶部到屏幕外底部，随机速度和路径 */
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px) rotate(0deg); /* 起始位置（顶部外）+ 初始旋转 */
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg); /* 结束位置（底部外）+ 旋转 */
+        opacity: 0; /* 落地后消失 */
+      }
+    }
+    /* 中间超链接样式 */
+.center-link {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  color: #87CEEB; /* 浅蓝色 */
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+/* 鼠标悬浮效果 */
+.center-link:hover {
+  color: #4169E1; /* 加深蓝色 */
+  text-shadow: 0 0 10px #87CEEB;
+}
+  </style>
+</head>
+<body>
+  <script>
+    // 生成单个爱心的函数
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      // 爱心符号（直接用 Unicode 字符，无需图片）
+      heart.innerText = '❤';
+
+      // 1. 随机水平位置（左右分布）
+      const left = Math.random() * 100; // 0-100% 屏幕宽度
+      heart.style.left = `${left}%`;
+
+      // 2. 随机大小（12px-36px）
+      const size = 12 + Math.random() * 24;
+      heart.style.fontSize = `${size}px`;
+
+      // 3. 随机下落速度（3s-8s，时间越短速度越快）
+      const duration = 3 + Math.random() * 5;
+      heart.style.animationDuration = `${duration}s`;
+
+      // 4. 随机透明度（0.5-1）
+      heart.style.opacity = 0.5 + Math.random() * 0.5;
+
+      // 5. 随机颜色（粉色系渐变）
+      const colors = ['#ff4c9f', '#ff66b2', '#ff85c0', '#ff99cc', '#ffb3d9'];
+      heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+      // 添加到页面
+      document.body.appendChild(heart);
+
+      // 爱心落地后删除元素（避免占用内存）
+      setTimeout(() => {
+        heart.remove();
+      }, duration * 1000);
+    }
+
+    // 每隔 300ms 生成一个爱心（可调整频率，数字越小爱心越多）
+    setInterval(createHeart, 300);
+  </script>
+     <!-- href 替换为你要跳转的网址 -->
+<a href="./main.html" class="center-link">朱萍我爱你</a>
+</body>
+</html>
